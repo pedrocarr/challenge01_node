@@ -52,9 +52,22 @@ app.get('/todos', checksExistsUserAccount, (req, res) => {
 });
 
 app.post('/todos', checksExistsUserAccount, (req, res) => {
-  const { title, deadline } = req;
+  const { title, deadline } = req.body;
 
-  
+  const { user } = req;
+
+  const tasks = {
+    title,
+    done: false,
+    deadline: new Date(deadline),
+    created_at: new Date()
+  }
+
+  user.todos.push(tasks);
+
+  return res.status(201).send();
+
+
 });
 
 app.put('/todos/:id', checksExistsUserAccount, (request, response) => {
