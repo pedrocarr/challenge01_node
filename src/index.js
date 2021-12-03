@@ -71,16 +71,26 @@ app.post('/todos', checksExistsUserAccount, (req, res) => {
 
 });
 
-app.put('/todos/:id', checksExistsUserAccount, (request, response) => {
-  // Complete aqui
+app.put('/todos/:id', checksExistsUserAccount, (req, res) => {
+  const { id } = req.params;
+  const { title, deadline } = req.body;
+  const { user } = req;
+
+  const todo = user.todos.find(todo => todo.id === id);
+
+  todo.title = title;
+  todo.deadline = new Date(deadline);
+
+  return res.status(201).send();
+  
 });
 
-app.patch('/todos/:id/done', checksExistsUserAccount, (request, response) => {
-  // Complete aqui
+app.patch('/todos/:id/done', checksExistsUserAccount, (req, res) => {
+  
 });
 
-app.delete('/todos/:id', checksExistsUserAccount, (request, response) => {
-  // Complete aquijdjdjdjd
+app.delete('/todos/:id', checksExistsUserAccount, (req, res) => {
+  
 });
 
 module.exports = app;
